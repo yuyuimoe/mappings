@@ -41,11 +41,11 @@ plugins {
     id("maven-publish")
 }
 
-group = "me.kcra.takenaka" // change me
+group = "moe.yuyui.mappings" // change me
 // format: <oldest version>+<newest version>[-SNAPSHOT]
 // this is included in META-INF/MANIFEST.MF under Implementation-Version
 // be nice to people who use the bundles and don't change the format
-version = "1.8.8+26.1" // change me
+version = "1.20.1" // change me
 
 /**
  * A three-way choice of mappings.
@@ -106,21 +106,7 @@ val bundleWorkspace by lazy {
 val manifest = versionManifestOf()
 val yarnProvider = YarnMetadataProvider(sharedCacheWorkspace)
 val mappingConfig = buildMappingConfig {
-    version(
-        manifest
-            .range("1.8.8", "26.1") { // change me
-                // exclude 1.20, 1.20.3, 1.20.5 and 1.21.2 - hotfixed versions                
-                // exclude 1.16 and 1.10.1, they don't have most mappings and are basically not used at all
-                // exclude 1.8.9, client-only update - no Spigot mappings, no thank you
-                // exclude 1.9.1 and 1.9.3 - no mappings at all
-                exclude("1.16", "1.10.1", "1.8.9", "1.9.1", "1.9.3", "1.20", "1.20.3", "1.20.5", "1.21.2")
-
-                // include only releases, no snapshots
-                includeTypes(Version.Type.RELEASE)
-            }
-            .map(Version::id)
-    )
-    // version("1.21.5-rc2") // latest snapshot, change me
+    version("1.20.1") // latest snapshot, change me
     workspace(mappingCacheWorkspace)
 
     // remove Searge's ID namespace, it's not necessary
@@ -338,7 +324,7 @@ val buildWeb by tasks.registering {
     }
     doLast {
         webWorkspace[".nojekyll"].writeText("")
-        webWorkspace["CNAME"].writeText("mappings.dev") // change me, remove if you want to build for a *.github.io domain
+        //webWorkspace["CNAME"].writeText("mappings.dev") // change me, remove if you want to build for a *.github.io domain
     }
 }
 
@@ -349,7 +335,7 @@ publishing {
             pom {
                 name.set("mappings")
                 description.set("A mapping bundle with a basic set of mappings for Mojang-based server and client development.")
-                url.set("https://github.com/zlataovce/mappings") // change me
+                url.set("https://github.com/yuyuimoe/mappings") // change me
                 developers {
                     developer {
                         id.set("zlataovce")
@@ -358,9 +344,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection.set("scm:git:github.com/zlataovce/mappings.git") // change me
-                    developerConnection.set("scm:git:ssh://github.com/zlataovce/mappings.git") // change me
-                    url.set("https://github.com/zlataovce/mappings/tree/main") // change me
+                    connection.set("scm:git:github.com/yuyuimoe/mappings.git") // change me
+                    developerConnection.set("scm:git:ssh://github.com/yuyuimoe/mappings.git") // change me
+                    url.set("https://github.com/yuyuimoe/mappings/tree/main") // change me
                 }
             }
         }
